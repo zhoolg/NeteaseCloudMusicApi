@@ -1,5 +1,6 @@
 // 搜索
 
+const createOption = require('../util/option.js')
 module.exports = (query, request) => {
   const data = {
     s: query.keywords,
@@ -8,10 +9,5 @@ module.exports = (query, request) => {
     offset: query.offset || 0,
     total: true,
   }
-  return request('POST', `https://music.163.com/api/cloudsearch/pc`, data, {
-    crypto: 'weapi',
-    cookie: query.cookie,
-    proxy: query.proxy,
-    realIP: query.realIP,
-  })
+  return request('POST', `/api/cloudsearch/pc`, data, createOption(query))
 }

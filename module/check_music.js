@@ -1,5 +1,6 @@
 // 歌曲可用性
 
+const createOption = require('../util/option.js')
 module.exports = (query, request) => {
   const data = {
     ids: '[' + parseInt(query.id) + ']',
@@ -7,14 +8,9 @@ module.exports = (query, request) => {
   }
   return request(
     'POST',
-    `https://music.163.com/weapi/song/enhance/player/url`,
+    `/api/song/enhance/player/url`,
     data,
-    {
-      crypto: 'weapi',
-      cookie: query.cookie,
-      proxy: query.proxy,
-      realIP: query.realIP,
-    },
+    createOption(query, 'weapi'),
   ).then((response) => {
     let playable = false
     if (response.body.code == 200) {
@@ -23,12 +19,13 @@ module.exports = (query, request) => {
       }
     }
     if (playable) {
-      response.body = { success: true, message: 'ok' }
+      response.body = { code: 200, success: true, message: 'ok' }
       return response
     } else {
-      response.status = 404
-      response.body = { success: false, message: '亲爱的,暂无版权' }
-      return Promise.reject(response)
+      // response.status = 404
+      response.body = { code: 200, success: false, message: '亲爱的,暂无版权' }
+      return response
+      // return Promise.reject(response)
     }
   })
 }
