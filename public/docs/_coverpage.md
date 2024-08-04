@@ -7,7 +7,7 @@
 - 更完善的文档
 
 
-[GitLab](https://gitlab.com/Binaryify/NeteaseCloudMusicApi)
+
 [Get Started](#neteasecloudmusicapi)
 
 ![color](#ffffff)
